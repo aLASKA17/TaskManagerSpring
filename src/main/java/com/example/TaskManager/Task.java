@@ -7,16 +7,17 @@ public class Task {
     private String description;
     private boolean completed;
 
+
     public int generateId() {
         index++;
         return index;
     }
 
-    Task(int id, String title, String description, boolean completed) {
+    Task(String title, String description) {
         this.title = title;
         this.id = generateId();
         this.description = description;
-        this.completed = completed;
+        this.completed = false;
     }
 
 
