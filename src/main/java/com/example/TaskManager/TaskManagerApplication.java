@@ -1,32 +1,38 @@
 package com.example.TaskManager;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-@SpringBootApplication
 @RestController
 public class TaskManagerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TaskManagerApplication.class, args);
-	}
+	List<Task> taskList = new CopyOnWriteArrayList<>();
 
-	List<Task> taskList = new ArrayList<>();
-
-	@GetMapping("/")
-	public List<Task> getMethodName(@RequestParam String param) {
-		taskList.add(new Task(0, "param", "param", false));
+	@GetMapping("/addTask")
+	public List<Task> addTask(@RequestParam String title, @RequestParam String description) {
+		taskList.add(new Task(0, title, description, false));
 		return taskList;
 	}
-	
-	
 
+	@GetMapping("/removeTask")
+	public List<Task> removeTask(@RequestParam int id){
+		taskList.remove(id-1);
+		return taskList;
+	}
+
+	@GetMapping("getTasks")
+	public List<Task> getTasks() {
+		return taskList;
+	}
+
+	@GetMapping("/comptetedTask")
+	public List<Task> compltedTask(@RequestParam int id) {
+		taskList.get(id-1).setCompleted(true);
+		return taskList;
+	}
 }

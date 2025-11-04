@@ -2,16 +2,23 @@ package com.example.TaskManager;
 
 public class Task {
     private int id;
+    private static int index = 0;
     private String title;
     private String description;
     private boolean completed;
 
+    public int generateId() {
+        index++;
+        return index;
+    }
+
     Task(int id, String title, String description, boolean completed) {
         this.title = title;
-        this.id = id;
+        this.id = generateId();
         this.description = description;
         this.completed = completed;
     }
+
 
     public int getId() {
         return id;
